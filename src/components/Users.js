@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 // add any needed imports here
 class Users extends Component {
 
   render() {
     return (
       <div>
-        <ul>
           Users!
-          {/* Write code here that displays the usernames of all users in the Redux store */}
-          {/* In addition, display the total number of users curently in the store */}
+        <ul>
+          {this.props.users.map(user => <li key={user}>{user}</li>) }
         </ul>
+          <div>Total: {this.props.userCount}</div>
       </div>
     )
   }
 }
 
 //add mapStateToProps here
+const mapStateToProps = (store) => {
+  return {
+    users: store.users.map(user => user.username),
+    userCount: store.users.length      
+  }
+}
 
 // connect this component to Redux
-export default Users
+export default connect(mapStateToProps)(Users)
